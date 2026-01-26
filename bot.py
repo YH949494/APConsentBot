@@ -167,6 +167,8 @@ def main():
     if not BOT_TOKEN:
         raise RuntimeError("Missing BOT_TOKEN env var")
 
+    print("BOT STARTED: polling mode")
+    
     init_db()
 
     app = Application.builder().token(BOT_TOKEN).build()
