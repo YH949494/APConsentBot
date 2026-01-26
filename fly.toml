@@ -1,4 +1,4 @@
-app = "APConsentBot"
+app = "apconsentbot"
 primary_region = "sin"
 
 [build]
