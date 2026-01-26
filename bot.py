@@ -8,7 +8,7 @@ from telegram import (
     Update,
 )
 from telegram.ext import (
-    Application,
+    Application, 
     CallbackQueryHandler,
     CommandHandler,
     ContextTypes,
