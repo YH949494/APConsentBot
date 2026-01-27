@@ -1,0 +1,35 @@
+name: Fly Infra (one-time)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_volume:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Create volume (if none unattached)
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -e
+          APP="apconsentbot"
+          REGION="sin"
+          VOL_NAME="consent_data"
+
+          echo "Listing volumes..."
+          flyctl volumes list -a "$APP"
+
+          # If no unattached volume exists, create one
+          UNATTACHED_COUNT=$(flyctl volumes list -a "$APP" --json | jq -r \
+            '[.[] | select(.Name=="'"$VOL_NAME"'" and .Region=="'"$REGION"'" and (.AttachedMachine==null or .AttachedMachine==""))] | length')
+
+          echo "Unattached $VOL_NAME in $REGION: $UNATTACHED_COUNT"
+
+          if [ "$UNATTACHED_COUNT" -eq 0 ]; then
+            echo "Creating a new volume..."
+            flyctl volumes create "$VOL_NAME" -a "$APP" -r "$REGION" -s 1
+          else
+            echo "OK: unattached volume exists. No action."
+          fi
