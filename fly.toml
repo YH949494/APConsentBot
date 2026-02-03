@@ -2,7 +2,7 @@ app = "apconsentbot"
 primary_region = "sin"
 
 [build]
-  builder = "paketobuildpacks/builder:base"
+  dockerfile = "Dockerfile"
 
 [env]
   CONSENT_DB_PATH = "/data/consent.db"
