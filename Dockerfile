@@ -1,3 +1,4 @@
+# Force rebuild 1
 # Use a standard Python image that includes sqlite3
 FROM python:3.10-slim
 
