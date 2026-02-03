@@ -8,7 +8,7 @@ primary_region = "sin"
   CONSENT_DB_PATH = "/data/consent.db"
 
 [processes]
-  web = "python bot.py"
+  app = "python bot.py"
 
 [mounts]
   source = "consent_data"
