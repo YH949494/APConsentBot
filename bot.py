@@ -161,7 +161,7 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         group_link = os.getenv(
             "PRIVATE_GROUP_LINK",
-            "https://t.me/+u4EQ9Qfl3ysyZDU1",
+            "https://t.me/+UEeYXBVqATMzMGI1",
         ).strip()
         await query.message.reply_text(
             f"Private member group:\n{group_link}",
