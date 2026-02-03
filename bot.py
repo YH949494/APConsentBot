@@ -48,6 +48,17 @@ STEP3_TEXT = (
 )
 
 
+FINAL_HANDOFF_TEXT = (
+    "You may proceed.\n\n"
+    "This is a private member group focused on:\n"
+    "• Discussion\n"
+    "• Coordination of small rewards\n"
+    "• Member-only access\n\n"
+    "No adult content is shared there.\n"
+    "No guarantees or promotions."
+)
+
+
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
@@ -143,19 +154,18 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if data == CB_CONTINUE:
         log_action(user, action="continue", consent_flag=None)
-
-        # ✅ TODO: Replace this with your next safe step.
-        # Examples:
-        # - Send a private group invite link
-        # - Show “Member Perks” menu
-        # - Redirect to a neutral landing page
-        #
-        # IMPORTANT: Keep wording neutral. No porn/gambling words here either.
-        await query.edit_message_text(
-            "Access granted.\n\n"
-            "Next steps:\n"
-            "• You will receive member options shortly.\n"
-            "• If you do not recognize this hub, you may leave at any time."
+        await query.edit_message_text("Proceeding…")
+        await query.message.reply_text(
+            FINAL_HANDOFF_TEXT,
+            disable_web_page_preview=True,
+        )
+        group_link = os.getenv(
+            "PRIVATE_GROUP_LINK",
+            "https://t.me/+u4EQ9Qfl3ysyZDU1",
+        ).strip()
+        await query.message.reply_text(
+            f"Private member group:\n{group_link}",
+            disable_web_page_preview=True,
         )
         return
 
